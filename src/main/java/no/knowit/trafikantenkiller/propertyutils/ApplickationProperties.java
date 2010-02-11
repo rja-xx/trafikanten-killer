@@ -1,4 +1,4 @@
-package no.knowit.neo4j;
+package no.knowit.trafikantenkiller.propertyutils;
 
 import java.util.Properties;
 

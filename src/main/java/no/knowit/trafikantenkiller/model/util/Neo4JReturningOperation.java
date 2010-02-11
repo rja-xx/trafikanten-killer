@@ -1,17 +1,17 @@
-package no.knowit.neo4j;
+package no.knowit.trafikantenkiller.model.util;
 
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 
 public abstract class Neo4JReturningOperation<T> {
 
-	private final EmbeddedGraphDatabase database;
+	protected final EmbeddedGraphDatabase database;
 
 	public Neo4JReturningOperation(EmbeddedGraphDatabase database) {
 		this.database = database;
 	}
 
-	public T retreiveInTransaction() {
+	public T retreiveInTransaction() throws Exception {
 		Transaction tx = database.beginTx();
 		T result = null;
 		try{
@@ -19,6 +19,7 @@ public abstract class Neo4JReturningOperation<T> {
 			tx.success();
 		}catch (Exception e) {
 			tx.failure();
+			throw e;
 		}finally{
 			tx.finish();
 		}
